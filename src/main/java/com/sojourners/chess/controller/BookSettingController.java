@@ -2,7 +2,6 @@ package com.sojourners.chess.controller;
 
 import com.sojourners.chess.App;
 import com.sojourners.chess.config.Properties;
-import com.sojourners.chess.enginee.Engine;
 import com.sojourners.chess.openbook.MoveRule;
 import com.sojourners.chess.openbook.OpenBookManager;
 import com.sojourners.chess.util.DialogUtils;
