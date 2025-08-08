@@ -1,11 +1,12 @@
 package com.sojourners.chess.config;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sojourners.chess.board.ChessBoard;
 import com.sojourners.chess.enginee.Engine;
 import com.sojourners.chess.model.EngineConfig;
 import com.sojourners.chess.openbook.MoveRule;
 import com.sojourners.chess.util.PathUtils;
-
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,6 +17,11 @@ public class Properties implements Serializable {
     private static final long serialVersionUID = -1410031608529065857L;
 
     private static Properties prop;
+
+    // Gson 实例（带 pretty 格式）
+    private static final Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
 
     private ChessBoard.BoardSize boardSize;
     private ChessBoard.BoardStyle boardStyle = ChessBoard.BoardStyle.DEFAULT;
@@ -113,33 +119,27 @@ public class Properties implements Serializable {
 
     public static synchronized Properties getInstance() {
         if (prop == null) {
-            String path = PathUtils.getJarPath() + "properties";
+            String path = PathUtils.getJarPath() + "properties.json";
             File file = new File(path);
             if (file.exists()) {
-                ObjectInputStream os = null;
-                try {
-                    os = new ObjectInputStream(new FileInputStream(file));
-                    prop = (Properties) os.readObject();
+                try (Reader reader = new FileReader(file)) {
+                    prop = gson.fromJson(reader, Properties.class);
                 } catch (Exception e) {
                     e.printStackTrace();
-                } finally {
-                    try {
-                        if (os != null)
-                            os.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
-            } else {
+            }
+            if (prop == null) {
                 try {
                     List<EngineConfig> engineConfigList = new ArrayList<>();
-                    prop = new Properties(ChessBoard.BoardSize.AUTOFIT_BOARD, true,
+                    prop = new Properties(
+                            ChessBoard.BoardSize.AUTOFIT_BOARD, true,
                             1, 16, "",
                             Engine.AnalysisModel.FIXED_TIME, 5000, true,
                             920, 737, 0.64, 0.6,
                             100, 2, true, true, false,
                             true, true, false, 2000, 15,
-                            MoveRule.BEST_SCORE, true, new ArrayList<>());
+                            MoveRule.BEST_SCORE, true, new ArrayList<>()
+                    );
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -149,21 +149,11 @@ public class Properties implements Serializable {
     }
 
     public void save() {
-        ObjectOutputStream os = null;
-        try {
-            String path = PathUtils.getJarPath() + "properties";
-            File file = new File(path);
-            os = new ObjectOutputStream(new FileOutputStream(file));
-            os.writeObject(this);
+        String path = PathUtils.getJarPath() + "properties.json";
+        try (Writer writer = new FileWriter(path)) {
+            gson.toJson(this, writer);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (os != null)
-                    os.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 

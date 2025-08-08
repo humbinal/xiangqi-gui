@@ -6,8 +6,8 @@ import java.io.LineNumberReader;
 public class ShellUtils {
 
     public static String exec(String command) {
-        String[] cmd = { "bash", "-c", command};
-         return exec(cmd);
+        String[] cmd = {"bash", "-c", command};
+        return exec(cmd);
     }
 
     public static String exec(String[] cmd) {
@@ -17,7 +17,7 @@ public class ShellUtils {
             LineNumberReader input = new LineNumberReader(ir);
             String line;
             StringBuffer sb = new StringBuffer();
-            while ((line = input.readLine ()) != null){
+            while ((line = input.readLine()) != null) {
                 sb.append(line);
                 sb.append(System.getProperty("line.separator"));
             }

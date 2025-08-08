@@ -81,6 +81,7 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
     public void pause() {
         this.pause = true;
     }
+
     public void resume() {
         this.pause = false;
     }
@@ -181,9 +182,11 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
         int y1;
         int x2;
         int y2;
+
         public Action(int flag) {
             this.flag = flag;
         }
+
         public Action(int flag, int x1, int y1, int x2, int y2) {
             this.flag = flag;
             this.x1 = x1;
@@ -292,9 +295,10 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
     /**
      * 对比棋盘，计算出当前操作
      * flag： 1对方已走棋，需要同步到引擎
-     *      2引擎已走棋，需要同步到目标平台
-     *      3识别到新棋局
-     *      4可能识别到新棋局
+     * 2引擎已走棋，需要同步到目标平台
+     * 3识别到新棋局
+     * 4可能识别到新棋局
+     *
      * @param linkBoard
      * @param engineBoard
      * @param robotBlack
@@ -417,6 +421,7 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
 
     /**
      * 前台截图
+     *
      * @param windowPos
      * @return
      */
@@ -429,6 +434,7 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
 
     /**
      * 前台点击
+     *
      * @param windowPos
      * @param p1
      * @param p2
@@ -438,7 +444,7 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
 
         Point mouse = MouseInfo.getPointerInfo().getLocation();
 
-        robot.mouseMove(windowPos.x + p1.x, windowPos.y+ p1.y);
+        robot.mouseMove(windowPos.x + p1.x, windowPos.y + p1.y);
 
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         if (prop.getMouseClickDelay() > 0) {
@@ -463,6 +469,7 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
 
     /**
      * 寻找棋盘区域
+     *
      * @return
      */
     boolean findBoardPosition() {
@@ -473,6 +480,7 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
 
     /**
      * 截图
+     *
      * @param fullScreen
      * @return
      */
@@ -511,6 +519,7 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
         }
         return f;
     }
+
     private boolean reverse(char[][] board) throws Exception {
         // 是否翻转
         int rowRedKing = -1, rowBlackKing = -1;
@@ -541,6 +550,7 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
 
     /**
      * 初始化棋盘局面
+     *
      * @return
      */
     private boolean initChessBoard() {
@@ -566,6 +576,7 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
 
     /**
      * 自动点击走棋
+     *
      * @param x1
      * @param y1
      * @param x2
@@ -582,6 +593,7 @@ public abstract class AbstractGraphLinker implements GraphLinker, Runnable {
             mouseClickByFront(windowPos, p1, p2);
         }
     }
+
     private Point getPosition(int x, int y) {
         double pieceWith = boardPos.width / (8 + OnnxModel.PADDING * 2);
         double pieceHeight = boardPos.height / (9 + OnnxModel.PADDING * 2);

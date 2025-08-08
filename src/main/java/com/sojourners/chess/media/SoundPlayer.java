@@ -1,6 +1,5 @@
 package com.sojourners.chess.media;
 
-import com.sun.jna.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;

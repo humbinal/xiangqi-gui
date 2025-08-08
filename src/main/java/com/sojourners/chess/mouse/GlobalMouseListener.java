@@ -40,6 +40,7 @@ public class GlobalMouseListener implements NativeMouseInputListener {
         GlobalScreen.registerNativeHook();
         GlobalScreen.addNativeMouseListener(this);
     }
+
     public void stopListenMouse() throws NativeHookException {
         GlobalScreen.removeNativeMouseListener(this);
         GlobalScreen.unregisterNativeHook();

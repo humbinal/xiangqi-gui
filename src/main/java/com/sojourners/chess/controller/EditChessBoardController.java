@@ -10,10 +10,10 @@ import com.sojourners.chess.util.DialogUtils;
 import com.sojourners.chess.util.XiangqiUtils;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.RadioButton;
 
 public class EditChessBoardController {
 

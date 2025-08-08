@@ -34,7 +34,7 @@ public class ZobristUtils {
     }
 
 
-    private final static int[] c90 = new int[] {
+    private final static int[] c90 = new int[]{
             0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3a, 0x3b,
             0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4a, 0x4b,
             0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5a, 0x5b,
@@ -48,7 +48,7 @@ public class ZobristUtils {
 
     };
 
-    private final static String[] san90 = new String[] {
+    private final static String[] san90 = new String[]{
             "a9", "b9", "c9", "d9", "e9", "f9", "g9", "h9", "i9",
             "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8", "i8",
             "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7", "i7",
@@ -67,8 +67,20 @@ public class ZobristUtils {
 
     static {
         pieces = new HashMap<>();
-        pieces.put('K', 0); pieces.put('A', 1); pieces.put('B', 2); pieces.put('N', 3); pieces.put('R', 4); pieces.put('C', 5); pieces.put('P', 6 );
-        pieces.put('k', 7); pieces.put('a', 8); pieces.put('b', 9); pieces.put('n', 10); pieces.put('r', 11); pieces.put('c', 12); pieces.put('p', 13);
+        pieces.put('K', 0);
+        pieces.put('A', 1);
+        pieces.put('B', 2);
+        pieces.put('N', 3);
+        pieces.put('R', 4);
+        pieces.put('C', 5);
+        pieces.put('P', 6);
+        pieces.put('k', 7);
+        pieces.put('a', 8);
+        pieces.put('b', 9);
+        pieces.put('n', 10);
+        pieces.put('r', 11);
+        pieces.put('c', 12);
+        pieces.put('p', 13);
 
         coordMap = new HashMap<>();
         for (int i = 0; i < 90; i++) {
@@ -78,7 +90,7 @@ public class ZobristUtils {
 
     private final static long zobristPlayer = 0xA0CE2AF90C452F58L;
 
-    private final static long[] zobristTable = new long[] {
+    private final static long[] zobristTable = new long[]{
             0x7130B4BD8F138026L, 0x451A5F875056AE15L, 0x9023211DB6E216DDL, 0x8176B9AB5178BE31L, 0x9CA65525FE49D1F0L,
             0x64BFA2303868852BL, 0xB91360D20127098EL, 0x36150C526E1DD2F5L, 0xD8BBFB8FCD6F735DL, 0xA3B35E61D7DA5068L,
             0x46982BFDF96E1DCDL, 0x012367021814AD81L, 0x4089DA4C1B9C5662L, 0x42BBDB342F88A0D4L, 0xC827E492D9CEB711L,

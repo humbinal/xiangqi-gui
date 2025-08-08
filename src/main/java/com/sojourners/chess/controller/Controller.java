@@ -5,6 +5,8 @@ import com.sojourners.chess.board.ChessBoard;
 import com.sojourners.chess.config.Properties;
 import com.sojourners.chess.enginee.Engine;
 import com.sojourners.chess.enginee.EngineCallBack;
+import com.sojourners.chess.enginee.LocalEngine;
+import com.sojourners.chess.enginee.RemoteEngine;
 import com.sojourners.chess.linker.*;
 import com.sojourners.chess.lock.SingleLock;
 import com.sojourners.chess.lock.WorkerTask;
@@ -29,10 +31,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
@@ -224,6 +226,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
             board.autoFitSize(borderPane.getWidth(), borderPane.getHeight(), splitPane.getDividerPositions()[0], prop.isLinkShowInfo());
         }
     }
+
     @FXML
     void stepTipChecked(ActionEvent event) {
         CheckMenuItem item = (CheckMenuItem) event.getTarget();
@@ -411,6 +414,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
         }
 
     }
+
     private void goCallBack(String move) {
         // 重新记录棋谱
         if (p == 0) {
@@ -439,6 +443,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
         }
 
     }
+
     private int getScore() {
         if (listView.getItems().size() <= 0)
             return 0;
@@ -452,6 +457,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
             return recordTable.getItems().get(recordTable.getItems().size() - 1).getScore();
         }
     }
+
     private void reLocationTable() {
         recordTable.getSelectionModel().select(p);
         recordTable.scrollTo(p);
@@ -669,7 +675,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
         yAxis.setTickMarkVisible(false);
         yAxis.setMinorTickVisible(false);
 
-        LineChart<Number,Number> lineChart = new LineChart<>(xAxis, yAxis);
+        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setMinHeight(100);
         lineChart.setLegendVisible(false);
         lineChart.setCreateSymbols(false);
@@ -681,6 +687,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
 
         charPane.setCenter(lineChart);
     }
+
     public void initialize() {
         // 读取配置
         prop = Properties.getInstance();
@@ -906,7 +913,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
     public void copyImageMenuClick(ActionEvent event) {
         WritableImage writableImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
         canvas.snapshot(null, writableImage);
-        BufferedImage bi =SwingFXUtils.fromFXImage(writableImage, null);
+        BufferedImage bi = SwingFXUtils.fromFXImage(writableImage, null);
         ClipboardUtils.setImage(bi);
     }
 
@@ -926,6 +933,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
 
     /**
      * new from origin fen that maybe reverse, and stop link mode at the same time
+     *
      * @param fenCode
      */
     private void newFromOriginFen(String fenCode) {
@@ -943,6 +951,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
 
     /**
      * 新建局面
+     *
      * @param fenCode 传null 新建默认初始局面；传fenCode 则根据fen创建局面
      */
     private void newChessBoard(String fenCode) {
@@ -976,6 +985,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
 
         System.gc();
     }
+
     private void resetTable() {
         recordTable.getItems().clear();
         recordTable.getItems().add(new ManualRecord(p, "初始局面", 0));
@@ -984,10 +994,11 @@ public class Controller implements EngineCallBack, LinkerCallBack {
     private void initEngineView() {
         // 引擎列表 线程数 哈希表大小
         refreshEngineComboBox();
-        for (int i = 1; i <= Runtime.getRuntime().availableProcessors(); i++) {
+        // for (int i = 1; i <= Runtime.getRuntime().availableProcessors(); i++) {
+        for (int i = 1; i <= 256; i++) {
             threadComboBox.getItems().add(String.valueOf(i));
         }
-        hashComboBox.getItems().addAll("16", "32", "64", "128", "256", "512", "1024", "2048", "4096");
+        hashComboBox.getItems().addAll("16", "32", "64", "128", "256", "512", "1024", "2048", "4096", "8192", "16384");
         // 加载设置
         threadComboBox.setValue(String.valueOf(prop.getThreadNum()));
         hashComboBox.setValue(String.valueOf(prop.getHashSize()));
@@ -1136,7 +1147,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
                         if (engine != null) {
                             engine.close();
                         }
-                        engine = new Engine(ec, this);
+                        engine = ec.getType() == Engine.Type.LOCAL ? new LocalEngine(ec, this) : new RemoteEngine(ec, this);
                         return;
                     }
                 }
@@ -1148,6 +1159,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
 
     /**
      * 连线模式下自动点击走棋
+     *
      * @param step
      */
     private void trickAutoClick(ChessBoard.Step step) {
@@ -1260,6 +1272,7 @@ public class Controller implements EngineCallBack, LinkerCallBack {
 
     /**
      * 图形连线初始化棋盘
+     *
      * @param fenCode
      * @param isReverse
      */

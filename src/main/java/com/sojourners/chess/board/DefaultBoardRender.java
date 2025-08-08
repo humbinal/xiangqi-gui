@@ -66,14 +66,16 @@ public class DefaultBoardRender extends BaseBoardRender {
 
     /**
      * 棋子外圈线条宽度
+     *
      * @return
      */
     private double getPieceBw(ChessBoard.BoardSize style) {
-        return getPieceSize(style) /  16d;
+        return getPieceSize(style) / 16d;
     }
 
     /**
      * 棋子内圈线条宽度
+     *
      * @return
      */
     private double getPieceSw(ChessBoard.BoardSize style) {

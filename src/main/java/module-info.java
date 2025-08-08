@@ -11,6 +11,7 @@ open module Xiangqi {
     requires java.desktop;
     requires java.sql;
     requires org.java_websocket;
+    requires com.google.gson;
 
     exports com.sojourners.chess;
 

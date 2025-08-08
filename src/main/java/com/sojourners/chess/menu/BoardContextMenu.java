@@ -4,14 +4,21 @@ import com.sojourners.chess.config.Properties;
 import com.sojourners.chess.enginee.Engine;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 
 public class BoardContextMenu extends ContextMenu {
 
-    /** * 单例 */
+    /**
+     * 单例
+     */
     private static volatile BoardContextMenu INSTANCE = null;
 
-    /** * 私有构造函数 */
+    /**
+     * 私有构造函数
+     */
     private BoardContextMenu() {
         MenuItem editMenuItem = new MenuItem("编辑局面");
         getItems().add(editMenuItem);
@@ -58,7 +65,9 @@ public class BoardContextMenu extends ContextMenu {
         getItems().add(switchMenuItem);
     }
 
-    /** * 获取实例 * @return GlobalMenu */
+    /**
+     * 获取实例 * @return GlobalMenu
+     */
     public static BoardContextMenu getInstance() {
         if (INSTANCE == null) {
             synchronized (BoardContextMenu.class) {

@@ -97,6 +97,7 @@ public abstract class BaseBoardRender implements BoardRender {
 
     /**
      * 获取楚河汉界字体大小
+     *
      * @return
      */
     private double getCenterTextSize(ChessBoard.BoardSize style) {
@@ -142,6 +143,7 @@ public abstract class BaseBoardRender implements BoardRender {
 
     /**
      * 棋步标识矩形线条宽度
+     *
      * @return
      */
     private double getStepRectWitdh(ChessBoard.BoardSize style) {
@@ -245,6 +247,7 @@ public abstract class BaseBoardRender implements BoardRender {
 
     /**
      * 获取线路序号字体大小
+     *
      * @return
      */
     private double getNumberSize(ChessBoard.BoardSize style) {
@@ -253,6 +256,7 @@ public abstract class BaseBoardRender implements BoardRender {
 
     /**
      * 棋盘内矩形线条宽度
+     *
      * @return
      */
     private double getInnerRectWidth(ChessBoard.BoardSize style) {
@@ -261,6 +265,7 @@ public abstract class BaseBoardRender implements BoardRender {
 
     /**
      * 棋盘外矩形线条宽度
+     *
      * @return
      */
     private double getOutRectWidth(ChessBoard.BoardSize style) {
@@ -269,6 +274,7 @@ public abstract class BaseBoardRender implements BoardRender {
 
     /**
      * 棋子大小
+     *
      * @return
      */
     public int getPieceSize(ChessBoard.BoardSize style) {
@@ -296,6 +302,7 @@ public abstract class BaseBoardRender implements BoardRender {
 
     /**
      * 棋盘边距
+     *
      * @return
      */
     public int getPadding(ChessBoard.BoardSize style) {

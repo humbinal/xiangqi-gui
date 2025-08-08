@@ -23,7 +23,6 @@ import java.util.Map;
 
 public class EngineAddController {
 
-
     private Properties prop;
 
     @FXML
@@ -38,6 +37,21 @@ public class EngineAddController {
     @FXML
     private ListView<Map.Entry<String, String>> optionsListView;
 
+    @FXML
+    private RadioButton localEngineRadio;
+
+    @FXML
+    private RadioButton remoteEngineRadio;
+
+    @FXML
+    private ToggleGroup engineTypeGroup;
+
+    @FXML
+    private Button selectButton;
+
+    @FXML
+    private Button connectButton;
+
     public static EngineConfig ec;
 
     private LinkedHashMap<String, String> options;
@@ -48,17 +62,46 @@ public class EngineAddController {
         fileChooser.setInitialDirectory(new File(PathUtils.getJarPath()));
         File file = fileChooser.showOpenDialog(App.getEngineAdd());
         if (file != null) {
-            pathText.setText(file.getPath());
-            nameText.setText(file.getName());
-            String protocol = Engine.test(file.getPath(), options = new LinkedHashMap<>());
-            if (protocol == null) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("提示");
-                alert.setHeaderText("无效的引擎文件");
-            }
-            protocolText.setText(protocol);
-            showOptions();
+            processEngineFile(file.getPath(), file.getName());
         }
+    }
+
+    @FXML
+    void connectButtonClick(ActionEvent e) {
+        String path = pathText.getText().trim();
+        if (path.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("提示");
+            alert.setHeaderText("请输入远程引擎URL，如：localhost:8080");
+            alert.showAndWait();
+            return;
+        }
+
+        // 对于远程引擎，使用路径作为名称（如果没有输入名称的话）
+        String engineName = nameText.getText().trim();
+        if (engineName.isEmpty()) {
+            engineName = path;
+        }
+
+        processEngineFile(path, engineName);
+    }
+
+    private void processEngineFile(String path, String name) {
+        pathText.setText(path);
+        if (nameText.getText().trim().isEmpty()) {
+            nameText.setText(name);
+        }
+        Engine.Type type = isLocalEngine() ? Engine.Type.LOCAL : Engine.Type.REMOTE;
+        String protocol = Engine.test(type, path, options = new LinkedHashMap<>());
+        if (protocol == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("提示");
+            alert.setHeaderText("无效的引擎文件或连接失败");
+            alert.showAndWait();
+            return;
+        }
+        protocolText.setText(protocol);
+        showOptions();
     }
 
     private void showOptions() {
@@ -75,18 +118,42 @@ public class EngineAddController {
 
     @FXML
     void okButtonClick(ActionEvent event) {
+        System.out.println("isLocalEngine:" + isLocalEngine());
+        Engine.Type engineType = isLocalEngine() ? Engine.Type.LOCAL : Engine.Type.REMOTE;
         String protocol = protocolText.getText();
         if (!"uci".equals(protocol) && !"ucci".equals(protocol)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("提示");
             alert.setHeaderText("引擎协议不正确");
+            alert.showAndWait();
             return;
         }
+
+        String path = pathText.getText().trim();
+        String name = nameText.getText().trim();
+
+        if (path.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("提示");
+            alert.setHeaderText("请输入引擎路径");
+            alert.showAndWait();
+            return;
+        }
+
+        if (name.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("提示");
+            alert.setHeaderText("请输入引擎名称");
+            alert.showAndWait();
+            return;
+        }
+
         if (ec == null) {
             // 添加引擎
-            prop.getEngineConfigList().add(new EngineConfig(nameText.getText(), pathText.getText(), protocolText.getText(), options));
+            prop.getEngineConfigList().add(new EngineConfig(engineType, nameText.getText(), pathText.getText(), protocolText.getText(), options));
         } else {
             // 编辑引擎
+            ec.setType(engineType);
             ec.setName(nameText.getText());
             ec.setPath(pathText.getText());
             ec.setProtocol(protocolText.getText());
@@ -100,6 +167,9 @@ public class EngineAddController {
 
         initListView();
 
+        // 初始化引擎类型选择监听器
+        setupEngineTypeListener();
+
         if (ec != null) {
             nameText.setText(ec.getName());
             pathText.setText(ec.getPath());
@@ -107,7 +177,42 @@ public class EngineAddController {
 
             this.options = (LinkedHashMap<String, String>) ec.getOptions().clone();
             showOptions();
+
+            if (ec.getType().equals(Engine.Type.LOCAL)) {
+                localEngineRadio.setSelected(true);
+            } else {
+                remoteEngineRadio.setSelected(true);
+            }
+        } else {
+            // 默认选择本地引擎
+            localEngineRadio.setSelected(true);
         }
+
+        // 更新UI状态
+        updateUIState();
+    }
+
+    private void setupEngineTypeListener() {
+        localEngineRadio.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            updateUIState();
+        });
+
+        remoteEngineRadio.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            updateUIState();
+        });
+    }
+
+    private void updateUIState() {
+        boolean isLocal = localEngineRadio.isSelected();
+        // 控制按钮显示
+        // 本地引擎
+        selectButton.setVisible(isLocal);
+        selectButton.setManaged(isLocal);
+        // 远程引擎
+        connectButton.setVisible(!isLocal);
+        connectButton.setManaged(!isLocal);
+        // 控制按钮启用状态
+        selectButton.setDisable(!isLocal);
     }
 
     private void initListView() {
@@ -226,4 +331,10 @@ public class EngineAddController {
 
         });
     }
+
+    // 获取当前引擎类型
+    public boolean isLocalEngine() {
+        return localEngineRadio.isSelected();
+    }
+
 }

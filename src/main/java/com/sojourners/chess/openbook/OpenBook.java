@@ -31,6 +31,7 @@ public interface OpenBook {
     default void sort(List<BookData> list, MoveRule mr) {
         Collections.sort(list, new Comparator<BookData>() {
             private Random rd = new SecureRandom();
+
             @Override
             public int compare(BookData o1, BookData o2) {
                 switch (mr) {

@@ -76,7 +76,7 @@ public class ClipboardUtils {
     public static void setImage(final Image image) {
         Transferable trans = new Transferable() {
             public DataFlavor[] getTransferDataFlavors() {
-                return new DataFlavor[] { DataFlavor.imageFlavor };
+                return new DataFlavor[]{DataFlavor.imageFlavor};
             }
 
             public boolean isDataFlavorSupported(DataFlavor flavor) {

@@ -46,6 +46,7 @@ public class LinuxGraphLinker extends AbstractGraphLinker {
 
     /**
      * 后台模式暂未实现
+     *
      * @param windowPos
      * @return
      */
@@ -56,6 +57,7 @@ public class LinuxGraphLinker extends AbstractGraphLinker {
 
     /**
      * 后台模式暂未实现
+     *
      * @param p1
      * @param p2
      */

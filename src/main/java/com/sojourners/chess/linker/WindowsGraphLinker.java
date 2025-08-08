@@ -35,6 +35,7 @@ public class WindowsGraphLinker extends AbstractGraphLinker implements MouseList
             e.printStackTrace();
         }
     }
+
     @Override
     public void mouseClick() {
         try {
@@ -113,6 +114,7 @@ public class WindowsGraphLinker extends AbstractGraphLinker implements MouseList
         }
         User32.INSTANCE.PostMessage(hwnd, 0x0202, new WinDef.WPARAM(0), new WinDef.LPARAM(makeLParam(x, y)));
     }
+
     private int makeLParam(int loWord, int hiWord) {
         return (hiWord << 16) | (loWord & 0xFFFF);
     }

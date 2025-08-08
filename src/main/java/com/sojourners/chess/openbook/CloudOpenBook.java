@@ -14,7 +14,7 @@ public class CloudOpenBook implements OpenBook {
     private final static String URL = "http://www.chessdb.cn/chessdb.php";
 
     @Override
-    public List<BookData> get(char[][] board, boolean redGo)  {
+    public List<BookData> get(char[][] board, boolean redGo) {
         return null;
     }
 

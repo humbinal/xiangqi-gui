@@ -12,7 +12,7 @@ public class MathUtils {
         double a = x1;
         double b = calculateDistance(x1, y1, x2, y2);
         double c = calculateDistance(0, y1, x2, y2);
-        double pai = Math.acos((a * a + b * b - c * c)/(2.0 * a * b));
+        double pai = Math.acos((a * a + b * b - c * c) / (2.0 * a * b));
         double angle = Math.toDegrees(pai);
         if (y2 > y1) {
             angle = 360 - angle;

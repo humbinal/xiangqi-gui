@@ -78,6 +78,7 @@ public class ChessBoard {
     public static class Point {
         int x;
         int y;
+
         public Point(int x, int y) {
             this.x = x;
             this.y = y;
@@ -99,9 +100,11 @@ public class ChessBoard {
             this.y = y;
         }
     }
+
     public class Step {
         Point first;
         Point second;
+
         public Step(Point first, Point second) {
             this.first = first;
             this.second = second;
@@ -131,6 +134,7 @@ public class ChessBoard {
         SMALL_BOARD,
         AUTOFIT_BOARD
     }
+
     public enum BoardStyle {
         DEFAULT,
         CUSTOM;
@@ -311,6 +315,7 @@ public class ChessBoard {
 
     /**
      * 浏览棋谱
+     *
      * @param fenCode
      * @param moveList
      * @param p
@@ -320,7 +325,8 @@ public class ChessBoard {
         if (p == 0) {
             // 开始局面
             prevStep = null;
-            tipFirst = null; tipSecond = null;
+            tipFirst = null;
+            tipSecond = null;
             remark = null;
             paint();
         } else {
@@ -398,7 +404,8 @@ public class ChessBoard {
         }
 
         prevStep = new Step(new Point(x1, y1), new Point(x2, y2));
-        tipFirst = null; tipSecond = null;
+        tipFirst = null;
+        tipSecond = null;
         remark = null;
         paint();
         return stepForEngine(x1, y1, x2, y2);
@@ -406,9 +413,9 @@ public class ChessBoard {
 
     private String stepForEngine(int x1, int y1, int x2, int y2) {
         StringBuffer sb = new StringBuffer();
-        sb.append((char)('a' + x1));
+        sb.append((char) ('a' + x1));
         sb.append(9 - y1);
-        sb.append((char)('a' + x2));
+        sb.append((char) ('a' + x2));
         sb.append(9 - y2);
         return sb.toString();
     }
@@ -419,6 +426,7 @@ public class ChessBoard {
 
     /**
      * 设置翻转
+     *
      * @param isReverse
      */
     public void reverse(boolean isReverse) {
@@ -430,6 +438,7 @@ public class ChessBoard {
 
     /**
      * 设置棋盘样式
+     *
      * @param bs
      */
     public void setBoardSize(BoardSize bs) {
@@ -439,6 +448,7 @@ public class ChessBoard {
 
     /**
      * 设置棋步提示
+     *
      * @param f
      */
     public void setStepTip(boolean f) {
@@ -453,6 +463,7 @@ public class ChessBoard {
 
     /**
      * 设置走棋音效
+     *
      * @param f
      */
     public void setStepSound(boolean f) {
@@ -461,6 +472,7 @@ public class ChessBoard {
 
     /**
      * 翻译着法(记录棋谱)
+     *
      * @param move
      * @return
      */
@@ -472,6 +484,7 @@ public class ChessBoard {
 
     /**
      * 翻译引擎着法(思考细节)
+     *
      * @param moveList
      * @return
      */
@@ -549,9 +562,9 @@ public class ChessBoard {
             }
             int pieceSize;
             if (width / height > 1120 / 1240d) {
-                pieceSize = (int) (height / (10 + 1/3d));
+                pieceSize = (int) (height / (10 + 1 / 3d));
             } else {
-                pieceSize = (int) (width / (9 + 1/3d));
+                pieceSize = (int) (width / (9 + 1 / 3d));
             }
             if (pieceSize < 42) {
                 pieceSize = 42;

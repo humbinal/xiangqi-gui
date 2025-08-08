@@ -14,9 +14,9 @@ public class HttpUtils {
     public static final String FORM_TYPE = "application/x-www-form-urlencoded;charset=UTF-8";
 
     /**
-     *
      * 方法说明：<br>
-     * @param url 请求URL
+     *
+     * @param url     请求URL
      * @param content post参数 key1=val1&key2=val2&key3=val3
      * @return
      * @throws Exception
@@ -27,9 +27,9 @@ public class HttpUtils {
     }
 
     /**
-     *
      * 方法说明：<br>
-     * @param url 请求URL
+     *
+     * @param url     请求URL
      * @param content post参数 key1=val1&key2=val2&key3=val3
      * @return
      * @throws Exception
@@ -40,6 +40,7 @@ public class HttpUtils {
 
     /**
      * post 请求
+     *
      * @param url
      * @param json
      * @param header
@@ -51,7 +52,7 @@ public class HttpUtils {
         StringBuilder result = new StringBuilder();
 
         URL u = new URL(url);
-        HttpURLConnection con = (HttpURLConnection)u.openConnection();
+        HttpURLConnection con = (HttpURLConnection) u.openConnection();
         con.setDoInput(true);
         con.setDoOutput(true);
         con.setAllowUserInteraction(false);
@@ -98,7 +99,7 @@ public class HttpUtils {
 
     public static InputStream getInputStreamBySendByPost(String url, String content) throws IOException {
         URL u = new URL(url);
-        HttpURLConnection con = (HttpURLConnection)u.openConnection();
+        HttpURLConnection con = (HttpURLConnection) u.openConnection();
 
         con.setDoInput(true);
         con.setDoOutput(true);
@@ -109,17 +110,13 @@ public class HttpUtils {
         con.setConnectTimeout(10000);
         con.setReadTimeout(20000);
         OutputStream out = null;
-        try
-        {
+        try {
             out = con.getOutputStream();
             out.write(content.getBytes(StandardCharsets.UTF_8));
             out.flush();
             return con.getInputStream();
-        }
-        finally
-        {
-            if (out != null)
-            {
+        } finally {
+            if (out != null) {
                 out.close();
             }
 
@@ -128,7 +125,8 @@ public class HttpUtils {
 
     /**
      * HTTP GET方法
-     * @param url 请求URL
+     *
+     * @param url     请求URL
      * @param content get参数 key1=val1&key2=val2&key3=val3
      * @return
      */
@@ -140,7 +138,7 @@ public class HttpUtils {
             con.setConnectTimeout(timeout);
             con.setReadTimeout(timeout);
             StringBuffer result = new StringBuffer();
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))){
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
                 String line;
                 while (null != (line = reader.readLine())) {
                     result.append(line);

@@ -101,6 +101,7 @@ public class App extends Application {
 
         engineAdd.showAndWait();
     }
+
     public static void closeEngineAdd() {
         engineAdd.close();
     }
@@ -117,6 +118,7 @@ public class App extends Application {
 
         timeSetting.showAndWait();
     }
+
     public static void closeTimeSetting() {
         timeSetting.close();
     }
@@ -133,6 +135,7 @@ public class App extends Application {
 
         bookSetting.showAndWait();
     }
+
     public static void closeBookSetting() {
         bookSetting.close();
     }
@@ -149,6 +152,7 @@ public class App extends Application {
 
         linkSetting.showAndWait();
     }
+
     public static void closeLinkSetting() {
         linkSetting.close();
     }
@@ -178,6 +182,7 @@ public class App extends Application {
             return null;
         }
     }
+
     public static void closeEditChessBoard() {
         editChessBoard.close();
     }

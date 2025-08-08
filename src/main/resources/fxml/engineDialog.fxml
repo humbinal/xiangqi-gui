@@ -20,8 +20,8 @@
       <ToolBar minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
           <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addButtonClick" prefHeight="24.0" prefWidth="24.0" style="-fx-background-image: url('/image/add.png');" stylesheets="@../style/app.css" text="Button" />
-            <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#editButtonClick" prefHeight="24.0" prefWidth="24.0" style="-fx-background-image: url('/image/edit.png');" stylesheets="@../style/app.css" text="Button" />
-            <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteButtonClick" prefHeight="24.0" prefWidth="24.0" style="-fx-background-image: url('/image/delete.png');" stylesheets="@../style/app.css" text="Button" />
+          <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#editButtonClick" prefHeight="24.0" prefWidth="24.0" style="-fx-background-image: url('/image/edit.png');" stylesheets="@../style/app.css" text="Button" />
+          <Button contentDisplay="GRAPHIC_ONLY" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteButtonClick" prefHeight="24.0" prefWidth="24.0" style="-fx-background-image: url('/image/delete.png');" stylesheets="@../style/app.css" text="Button" />
         </items>
       </ToolBar>
    </top>

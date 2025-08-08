@@ -62,12 +62,12 @@ public class Yolo11Model extends Yolo5Model {
         int stride = 4 + sizeClasses;
         int size = output.length / stride;
 
-        for(int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) {
             int indexBase = i * stride;
             float maxClass = 0.0F;
             int maxIndex = 0;
 
-            for(int c = 0; c < sizeClasses; ++c) {
+            for (int c = 0; c < sizeClasses; ++c) {
                 if (output[reshape(indexBase + c + 4, stride, size)] > maxClass) {
                     maxClass = output[reshape(indexBase + c + 4, stride, size)];
                     maxIndex = c;

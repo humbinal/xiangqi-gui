@@ -4,13 +4,31 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="575.0" style="-fx-padding: 10px 0px;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sojourners.chess.controller.EngineAddController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="575.0" style="-fx-padding: 10px 0px;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sojourners.chess.controller.EngineAddController">
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <!-- 引擎类型选择 -->
+      <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" style="-fx-padding: 0px 20px;">
+         <children>
+            <Label text="引擎类型：" />
+            <RadioButton fx:id="localEngineRadio" mnemonicParsing="false" selected="true" text="本地引擎">
+               <toggleGroup>
+                  <ToggleGroup fx:id="engineTypeGroup" />
+               </toggleGroup>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </RadioButton>
+            <RadioButton fx:id="remoteEngineRadio" mnemonicParsing="false" text="远程引擎" toggleGroup="$engineTypeGroup" />
+         </children>
+      </HBox>
+
+      <HBox prefHeight="180.0" prefWidth="200.0">
          <children>
             <VBox prefHeight="165.0" prefWidth="300.0">
                <children>
@@ -19,7 +37,8 @@
                         <Label text="路径：" />
                         <TextField fx:id="pathText" prefHeight="27.0" prefWidth="170.0" />
                         <Label text="  " />
-                        <Button mnemonicParsing="false" onAction="#selectButtonClick" text="选择" />
+                        <Button fx:id="selectButton" mnemonicParsing="false" onAction="#selectButtonClick" text="选择" />
+                        <Button fx:id="connectButton" mnemonicParsing="false" onAction="#connectButtonClick" text="连接" visible="false" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="200.0" style="-fx-padding: 0px 20px;">
@@ -53,11 +72,13 @@
             <Button mnemonicParsing="false" onAction="#okButtonClick" prefHeight="27.0" prefWidth="72.0" text="确定">
                <HBox.margin>
                   <Insets right="20.0" />
-               </HBox.margin></Button>
+               </HBox.margin>
+            </Button>
             <Button mnemonicParsing="false" onAction="#cancelButtonClick" prefHeight="27.0" prefWidth="72.0" text="取消">
                <HBox.margin>
                   <Insets right="20.0" />
-               </HBox.margin></Button>
+               </HBox.margin>
+            </Button>
          </children>
          <VBox.margin>
             <Insets top="10.0" />

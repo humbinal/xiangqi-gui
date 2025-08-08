@@ -8,8 +8,8 @@ import ai.onnxruntime.OrtSession;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 public class Yolo5Model extends OnnxModel {
 
@@ -20,6 +20,7 @@ public class Yolo5Model extends OnnxModel {
 
     /**
      * 寻找棋盘范围，用于后续连线识别
+     *
      * @param img
      * @return
      */
@@ -97,6 +98,7 @@ public class Yolo5Model extends OnnxModel {
 
     /**
      * 根据图片识别棋子及其位置
+     *
      * @param img
      * @return
      */
@@ -205,20 +207,20 @@ public class Yolo5Model extends OnnxModel {
 
         List<DetectResult> results = new ArrayList<>();
 
-        for(int k = 0; k < 15; ++k) {
+        for (int k = 0; k < 15; ++k) {
             PriorityQueue<DetectResult> pq = new PriorityQueue<>(50, (lhs, rhs) -> {
                 return Double.compare(rhs.confidence, lhs.confidence);
             });
             Iterator var7 = list.iterator();
 
-            while(var7.hasNext()) {
+            while (var7.hasNext()) {
                 DetectResult intermediateResult = (DetectResult) var7.next();
                 if (intermediateResult.label == labels[k]) {
                     pq.add(intermediateResult);
                 }
             }
 
-            while(pq.size() > 0) {
+            while (pq.size() > 0) {
                 DetectResult[] a = new DetectResult[pq.size()];
                 DetectResult[] detections = pq.toArray(a);
 
@@ -226,7 +228,7 @@ public class Yolo5Model extends OnnxModel {
 
                 pq.clear();
 
-                for(int j = 1; j < detections.length; ++j) {
+                for (int j = 1; j < detections.length; ++j) {
                     DetectResult detection = detections[j];
                     Rectangle location = detection.rect;
                     if (this.boxIou(detections[0].rect, location) < 0.45d) {
@@ -238,6 +240,7 @@ public class Yolo5Model extends OnnxModel {
 
         return results;
     }
+
     private double boxIou(Rectangle a, Rectangle b) {
         return this.boxIntersection(a, b) / this.boxUnion(a, b);
     }
@@ -246,11 +249,13 @@ public class Yolo5Model extends OnnxModel {
         double i = this.boxIntersection(a, b);
         return a.getWidth() * a.getHeight() + b.getWidth() * b.getHeight() - i;
     }
+
     private double boxIntersection(Rectangle a, Rectangle b) {
         double w = this.overlap(a.getX(), a.getWidth(), b.getX(), b.getWidth());
         double h = this.overlap(a.getY(), a.getHeight(), b.getY(), b.getHeight());
         return w >= 0.0D && h >= 0.0D ? w * h : 0.0D;
     }
+
     private double overlap(double x1, double w1, double x2, double w2) {
         double l1 = x1 - w1 / 2.0D;
         double l2 = x2 - w2 / 2.0D;
@@ -268,12 +273,12 @@ public class Yolo5Model extends OnnxModel {
         int stride = 5 + sizeClasses;
         int size = output.length / stride;
 
-        for(int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) {
             int indexBase = i * stride;
             float maxClass = 0.0F;
             int maxIndex = 0;
 
-            for(int c = 0; c < sizeClasses; ++c) {
+            for (int c = 0; c < sizeClasses; ++c) {
                 if (output[indexBase + c + 5] > maxClass) {
                     maxClass = output[indexBase + c + 5];
                     maxIndex = c;
@@ -298,6 +303,7 @@ public class Yolo5Model extends OnnxModel {
         char label;
         Rectangle rect;
         float confidence;
+
         public DetectResult(char label, Rectangle rect, float confidence) {
             this.label = label;
             this.rect = rect;

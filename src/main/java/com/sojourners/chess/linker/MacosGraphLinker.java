@@ -22,7 +22,7 @@ public class MacosGraphLinker extends AbstractGraphLinker {
     public void getTargetWindowId() {
         sleep(3000);
         String script = "tell application \"System Events\" to return first application process whose frontmost is true";
-        String result = ShellUtils.exec(new String[]{"osascript", "-e", script });
+        String result = ShellUtils.exec(new String[]{"osascript", "-e", script});
         this.windowId = result.substring(20, result.length() - 1);
 
         scan();
@@ -53,6 +53,7 @@ public class MacosGraphLinker extends AbstractGraphLinker {
 
     /**
      * 后台模式暂未实现
+     *
      * @param windowPos
      * @return
      */
@@ -63,6 +64,7 @@ public class MacosGraphLinker extends AbstractGraphLinker {
 
     /**
      * 后台模式暂未实现
+     *
      * @param p1
      * @param p2
      */

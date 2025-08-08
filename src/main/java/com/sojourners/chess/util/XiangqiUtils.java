@@ -166,7 +166,7 @@ public class XiangqiUtils {
             return false;
         }
         boolean searchPao = false;
-        for (int i = x - 1; i >=0; i--) {
+        for (int i = x - 1; i >= 0; i--) {
             if (!searchPao) {
                 if (i == x - 1) {
                     if (isRed && board[y][i] == 'p' || !isRed && board[y][i] == 'P') {
@@ -264,10 +264,10 @@ public class XiangqiUtils {
         if ((y + 2 < 10) && (isRed && (board[y + 2][x + 1] == 'n' && board[y + 1][x + 1] == ' ' || board[y + 2][x - 1] == 'n' && board[y + 1][x - 1] == ' ') || !isRed && (board[y + 2][x + 1] == 'N' && board[y + 1][x + 1] == ' ' || board[y + 2][x - 1] == 'N' && board[y + 1][x - 1] == ' '))) {
             return true;
         }
-        if ((y - 1 >= 0 && y + 1 < 10) && (isRed && (board[y - 1][x - 2] == 'n' && board[y - 1][x - 1] == ' ' || y + 1 < 10 && board[y + 1][x - 2] == 'n' && board[y + 1][x - 1] == ' ') || !isRed && (y - 1 >=0 && board[y - 1][x - 2] == 'N' && board[y - 1][x - 1] == ' ' || board[y + 1][x - 2] == 'N' && board[y + 1][x - 1] == ' '))) {
+        if ((y - 1 >= 0 && y + 1 < 10) && (isRed && (board[y - 1][x - 2] == 'n' && board[y - 1][x - 1] == ' ' || y + 1 < 10 && board[y + 1][x - 2] == 'n' && board[y + 1][x - 1] == ' ') || !isRed && (y - 1 >= 0 && board[y - 1][x - 2] == 'N' && board[y - 1][x - 1] == ' ' || board[y + 1][x - 2] == 'N' && board[y + 1][x - 1] == ' '))) {
             return true;
         }
-        if ((y - 1 >= 0 && y + 1 < 10) && (isRed && (board[y - 1][x + 2] == 'n' && board[y - 1][x + 1] == ' ' || y + 1 < 10 && board[y + 1][x + 2] == 'n' && board[y + 1][x + 1] == ' ') || !isRed && (y - 1 >=0 && board[y - 1][x + 2] == 'N' && board[y - 1][x + 1] == ' ' || board[y + 1][x + 2] == 'N' && board[y + 1][x + 1] == ' '))) {
+        if ((y - 1 >= 0 && y + 1 < 10) && (isRed && (board[y - 1][x + 2] == 'n' && board[y - 1][x + 1] == ' ' || y + 1 < 10 && board[y + 1][x + 2] == 'n' && board[y + 1][x + 1] == ' ') || !isRed && (y - 1 >= 0 && board[y - 1][x + 2] == 'N' && board[y - 1][x + 1] == ' ' || board[y + 1][x + 2] == 'N' && board[y + 1][x + 1] == ' '))) {
             return true;
         }
 
@@ -298,6 +298,7 @@ public class XiangqiUtils {
         }
         return true;
     }
+
     private static boolean jieJiang(char[][] board, boolean isRed, int x, int y) {
         switch (board[y][x]) {
             case 'k':
@@ -573,6 +574,7 @@ public class XiangqiUtils {
                 return false;
         }
     }
+
     private static boolean jieJiang(char[][] board, boolean isRed, int x1, int y1, int x2, int y2) {
         char tmp = board[y2][x2];
         board[y2][x2] = board[y1][x1];
@@ -582,6 +584,7 @@ public class XiangqiUtils {
         board[y2][x2] = tmp;
         return !result;
     }
+
     public static boolean isRed(char c) {
         return c >= 'A' && c <= 'Z';
     }

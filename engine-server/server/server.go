@@ -64,6 +64,7 @@ func StartServer(pikafishPath string, isa string) {
 	}
 
 	fmt.Println("start server, pikafishPath:", pikafishPath, "executable:", exePath)
+	fmt.Println("your device cpu cores:", runtime.NumCPU())
 	// 接续执行服务器启动的逻辑...
 	engineBasePath = pikafishPath
 	engineExecPath = exePath

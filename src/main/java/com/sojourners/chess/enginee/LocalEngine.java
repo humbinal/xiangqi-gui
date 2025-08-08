@@ -17,19 +17,22 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * 引擎封装
  */
-public class EngineV1 {
+public class LocalEngine extends Engine {
 
     private Process process;
 
     private String protocol;
 
-    private AnalysisModel analysisModel;
+    private Engine.AnalysisModel analysisModel;
+
     private long analysisValue;
 
     private volatile boolean threadNumChange;
+
     private int threadNum;
 
     private volatile boolean hashSizeChange;
+
     private int hashSize;
 
     private BufferedReader reader;
@@ -42,13 +45,7 @@ public class EngineV1 {
 
     private Random random;
 
-    public enum AnalysisModel {
-        FIXED_TIME,
-        FIXED_STEPS,
-        INFINITE;
-    }
-
-    public EngineV1(EngineConfig ec, EngineCallBack cb) throws IOException {
+    public LocalEngine(EngineConfig ec, EngineCallBack cb) throws IOException {
         this.protocol = ec.getProtocol();
         this.cb = cb;
         this.random = new SecureRandom();
@@ -108,11 +105,11 @@ public class EngineV1 {
                 try {
                     String line;
                     while ((line = finalBr.readLine()) != null) {
-                        if ("uciok".equals(line) || "ucciok".equals(line) ) {
+                        if ("uciok".equals(line) || "ucciok".equals(line)) {
                             f.set(true);
                         }
                         if (line.startsWith("option") && line.contains("name") && line.contains("type") && line.contains("default")
-                            && !line.contains("Threads") && !line.contains("Hash")) {
+                                && !line.contains("Threads") && !line.contains("Hash")) {
 
                             String[] str = line.split("name|type|default");
                             String key = str[1].trim();
@@ -176,6 +173,7 @@ public class EngineV1 {
         }
         return true;
     }
+
     private void bestMove(String msg) {
         String[] str = msg.split(" ");
         if (str.length < 2 || !validateMove(str[1])) {
@@ -187,6 +185,7 @@ public class EngineV1 {
         }
         cb.bestMove(str[1], str.length == 4 ? str[3] : null);
     }
+
     private void thinkDetail(String msg) {
         String[] str = msg.split(" ");
         ThinkData td = new ThinkData();
@@ -243,6 +242,7 @@ public class EngineV1 {
         }
     }
 
+    @Override
     public void analysis(String fenCode, List<String> moves, char[][] board, boolean redGo) {
         Thread.startVirtualThread(() -> {
             if (Properties.getInstance().getBookSwitch()) {
@@ -296,6 +296,7 @@ public class EngineV1 {
         }
     }
 
+    @Override
     public void stop() {
         cmd("stop");
     }
@@ -310,6 +311,7 @@ public class EngineV1 {
         }
     }
 
+    @Override
     public void setThreadNum(int threadNum) {
         if (threadNum != this.threadNum) {
             this.threadNum = threadNum;
@@ -318,6 +320,7 @@ public class EngineV1 {
 
     }
 
+    @Override
     public void setHashSize(int hashSize) {
         if (hashSize != this.hashSize) {
             this.hashSize = hashSize;
@@ -325,11 +328,13 @@ public class EngineV1 {
         }
     }
 
-    public void setAnalysisModel(AnalysisModel model, long v) {
+    @Override
+    public void setAnalysisModel(Engine.AnalysisModel model, long v) {
         this.analysisModel = model;
         this.analysisValue = v;
     }
 
+    @Override
     public void close() {
         try {
             if (process.isAlive()) {
